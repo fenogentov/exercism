@@ -3,21 +3,23 @@ package isogram
 
 import (
 	"strings"
+	"unicode"
 )
 
 // IsIsogram defines is an isogram
 func IsIsogram(s string) bool {
 	s = strings.ToLower(s)
-	ch := make(map[byte]bool)
-	for i := 0; i < len(s); i++ {
 
-		_, ok := ch[s[i]]
+	mr := make(map[rune]bool)
 
-		if ok && !(s[i] == ' ' || s[i] == '-') {
+	for _, r := range s {
+
+		_, ok := mr[r]
+		if ok && unicode.IsLetter(r) {
 			return false
 		}
 
-		ch[s[i]] = true
+		mr[r] = true
 	}
 
 	return true
