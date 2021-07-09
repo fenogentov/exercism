@@ -1,4 +1,4 @@
-// Package tree implements a method to build a simple tree data structure.
+/// Package tree is a solution to lerning #12 (exercism.io)
 package tree
 
 import (

@@ -2,7 +2,10 @@
 
 package robotname
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 var maxNames = 26 * 26 * 10 * 10 * 10
 
@@ -10,6 +13,7 @@ func TestCollisions(t *testing.T) {
 	// Test uniqueness for new robots.
 	for i := len(seen); i <= maxNames-600000; i++ {
 		_ = New().getName(t, false)
+
 	}
 
 	// Test that names aren't recycled either.
@@ -18,9 +22,10 @@ func TestCollisions(t *testing.T) {
 		r.Reset()
 		_ = r.getName(t, false)
 	}
-
+	fmt.Println("t")
 	// Test that name exhaustion is handled more or less correctly.
 	_, err := New().Name()
+	fmt.Println("t")
 	if err == nil {
 		t.Fatalf("should return error if namespace is exhausted")
 	}

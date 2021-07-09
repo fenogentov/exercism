@@ -1,4 +1,4 @@
-// Package clock is a solution to lerning #9 (exercism.io)
+// Package clock is a solution to lerning #10 (exercism.io)
 package clock
 
 import (

@@ -1,4 +1,4 @@
-// Package grains is a solution to lerning #8 (exercism.io)
+// Package grains is a solution to lerning #9 (exercism.io)
 package grains
 
 import "errors"

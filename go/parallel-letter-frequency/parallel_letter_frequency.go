@@ -1,4 +1,4 @@
-// Package letter is a solution to lerning #10 (exercism.io)
+// Package letter is a solution to lerning #11 (exercism.io)
 package letter
 
 // FreqMap records the frequency of each rune in a given text.

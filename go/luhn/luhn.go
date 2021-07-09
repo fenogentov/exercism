@@ -1,4 +1,4 @@
-// Package luhn is a solution to lerning #7 (exercism.io)
+// Package luhn is a solution to lerning #8 (exercism.io)
 package luhn
 
 import (
