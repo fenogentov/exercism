@@ -1,19 +1,62 @@
+// Package strain implement the `keep` and `discard` operation on collections.
 package strain
 
 type Ints []int
 type Lists [][]int
 type Strings []string
 
-func (Ints) Keep(func(int) bool) Ints {
-	return nil
+// Keep implement keep operation on type Ints []int
+func (i Ints) Keep(f func(int) bool) Ints {
+	if i == nil {
+		return nil
+	}
+	r := Ints{}
+	for _, e := range i {
+		if f(e) {
+			r = append(r, e)
+		}
+	}
+	return r
 }
 
-func (Ints) Discard(func(int) bool) Ints {
-	return nil
+// Discard implement keep operation on type Ints []int
+func (i Ints) Discard(f func(int) bool) Ints {
+	if i == nil {
+		return nil
+	}
+	r := Ints{}
+	for _, e := range i {
+		if !f(e) {
+			r = append(r, e)
+		}
+	}
+	return r
 }
-func (Lists) Keep(func([]int) bool) Lists {
-	return nil
+
+// Keep implement keep operation on type Lists [][]int
+func (l Lists) Keep(f func([]int) bool) Lists {
+	if l == nil {
+		return nil
+	}
+	r := Lists{}
+	for _, e := range l {
+		if f(e) {
+			r = append(r, e)
+		}
+	}
+	return r
 }
-func (Strings) Keep(func(string) bool) Strings {
-	return nil
+
+// Keep implement keep operation on type Strings []string
+func (s Strings) Keep(f func(string) bool) Strings {
+	if s == nil {
+		return nil
+	}
+	r := Strings{}
+	for _, e := range s {
+		if f(e) {
+			r = append(r, e)
+		}
+	}
+	return r
 }
