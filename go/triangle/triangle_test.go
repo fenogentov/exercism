@@ -1,7 +1,6 @@
 package triangle
 
 import (
-	"fmt"
 	"math"
 	"testing"
 )
@@ -19,12 +18,12 @@ var testData = []testCase{
 	{Iso, 4, 3, 4},    // first and last sides equal
 	{Iso, 4, 4, 3},    // first two sides equal
 	{Iso, 10, 10, 2},  // again
-	{Deg, 2, 4, 2},    //// a "triangle" that is just a line is still OK
+	{Iso, 2, 4, 2},    // a "triangle" that is just a line is still OK
 	{Sca, 3, 4, 5},    // no sides equal
 	{Sca, 10, 11, 12}, // again
 	{Sca, 5, 4, 2},    // descending order
 	{Sca, .4, .6, .3}, // small sides
-	{Deg, 1, 4, 3},    //// a "triangle" that is just a line is still OK
+	{Sca, 1, 4, 3},    // a "triangle" that is just a line is still OK
 	{Sca, 5, 4, 6},    // 2a == b+c looks like equilateral, but isn't always.
 	{Sca, 6, 4, 5},    // 2a == b+c looks like equilateral, but isn't always.
 	{NaT, 0, 0, 0},    // zero length
@@ -79,7 +78,6 @@ func TestKind(t *testing.T) {
 	for _, test := range testData {
 		got := KindFromSides(test.a, test.b, test.c)
 		if got != test.want {
-			fmt.Println(got, "!=", test.want)
 			t.Fatalf("Triangle with sides, %g, %g, %g = %v, want %v",
 				test.a, test.b, test.c, got, test.want)
 		}

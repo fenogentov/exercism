@@ -9,9 +9,9 @@ type Kind int
 
 const (
 	NaT Kind = iota // not a triangle
-	Equ             // equilateral
-	Iso             // isosceles
-	Sca             // scalene
+	Equ             // equilateral равносторонний
+	Iso             // isosceles равнобедренный
+	Sca             // scalene разносторонний
 	Deg             // degenerate
 )
 
@@ -29,15 +29,14 @@ func KindFromSides(a, b, c float64) Kind {
 	}
 
 	switch {
-	case (a+b == c || a+c == b || b+c == a):
-		k = Deg
 	case (a == b) && (b == c):
 		k = Equ
 	case (a == b) || (a == c) || (b == c):
 		k = Iso
 	case (a != b) && (a != c) && (b != c):
 		k = Sca
+	case (a+b == c || a+c == b || b+c == a):
+		k = Deg
 	}
-
 	return k
 }
