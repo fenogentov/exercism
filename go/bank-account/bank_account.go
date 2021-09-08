@@ -9,7 +9,7 @@ import (
 type Account struct {
 	cach int64
 	stat bool
-	mu   *sync.Mutex
+	mu   *sync.RWMutex
 }
 
 // Open creates a bank account
@@ -20,7 +20,7 @@ func Open(deposit int64) *Account {
 	return &Account{
 		cach: deposit,
 		stat: true,
-		mu:   &sync.Mutex{},
+		mu:   &sync.RWMutex{},
 	}
 
 }
@@ -43,6 +43,8 @@ func (account *Account) Close() (payout int64, ok bool) {
 
 // Balance returns the balance on the bank account
 func (account *Account) Balance() (balance int64, ok bool) {
+	account.mu.RLock()
+	defer account.mu.RUnlock()
 	return account.cach, account.stat
 }
 
