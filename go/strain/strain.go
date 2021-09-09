@@ -7,10 +7,7 @@ type Strings []string
 
 // Keep implement keep operation on type Ints []int
 func (i Ints) Keep(f func(int) bool) Ints {
-	if i == nil {
-		return nil
-	}
-	r := Ints{}
+	var r Ints
 	for _, e := range i {
 		if f(e) {
 			r = append(r, e)
@@ -21,10 +18,7 @@ func (i Ints) Keep(f func(int) bool) Ints {
 
 // Discard implement keep operation on type Ints []int
 func (i Ints) Discard(f func(int) bool) Ints {
-	if i == nil {
-		return nil
-	}
-	r := Ints{}
+	var r Ints
 	for _, e := range i {
 		if !f(e) {
 			r = append(r, e)
@@ -35,10 +29,7 @@ func (i Ints) Discard(f func(int) bool) Ints {
 
 // Keep implement keep operation on type Lists [][]int
 func (l Lists) Keep(f func([]int) bool) Lists {
-	if l == nil {
-		return nil
-	}
-	r := Lists{}
+	var r Lists
 	for _, e := range l {
 		if f(e) {
 			r = append(r, e)
@@ -49,10 +40,7 @@ func (l Lists) Keep(f func([]int) bool) Lists {
 
 // Keep implement keep operation on type Strings []string
 func (s Strings) Keep(f func(string) bool) Strings {
-	if s == nil {
-		return nil
-	}
-	r := Strings{}
+	var r Strings
 	for _, e := range s {
 		if f(e) {
 			r = append(r, e)
