@@ -5,7 +5,7 @@ import (
 	"strconv"
 )
 
-// Car implements a remote controlled car.
+// Car implements a remote controlled car
 type Car struct {
 	speed        int
 	batteryDrain int

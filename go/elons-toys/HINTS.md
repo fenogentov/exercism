@@ -8,7 +8,7 @@
 ## 2. Display the distance driven
 
 - Create a [method][method] that has a receiver of type `Car`
-- Show the value of the _distance_ field
+- Show the value of the _distance_ field.
 
 ## 3. Display the battery percentage
 

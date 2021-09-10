@@ -10,7 +10,7 @@ flags:
     go test -v --bench . --benchmem
 
 Keep in mind that each reviewer will run benchmarks on a different machine, with
-different specs, so the results from these benchmark tests may vary.
+different specs, so the results from these benchmark tests may vary
 
 ## Submitting your solution
 
