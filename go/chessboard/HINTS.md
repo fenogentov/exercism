@@ -3,7 +3,7 @@
 ## General
 
 - An [integer value][integers] can be defined as one or more consecutive digits.
-- A [map value][maps] stores key-value data
+- A [map value][maps] stores key-value data.
 
 ## 1. Count how many squares are occupied iterating over the slices and maps
 

@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-// newChessboard return a *Chessboard for tests
+// newChessboard return a *Chessboard for tests.
 //
 //   1 2 3 4 5 6 7 8
 // A # _ # _ _ _ _ # A

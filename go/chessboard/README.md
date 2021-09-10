@@ -4,7 +4,7 @@ Welcome to Chessboard on Exercism's Go Track.
 If you need help running the tests or submitting your code, check out `HELP.md`.
 If you get stuck on the exercise, check out `HINTS.md`, but try and solve it without using those first :)
 
-## Introduction
+## Introduction.
 
 In Go, you can iterate a `slice` using `for` but you could also use
 `range`. You will find this useful to iterate over a `map`.

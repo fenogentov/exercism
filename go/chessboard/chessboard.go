@@ -1,6 +1,6 @@
 package chessboard
 
-// Rank stores if a square is occupied by a piece
+// Rank stores if a square is occupied by a piece.
 type Rank []bool
 
 // Chessboard contains eight Ranks, accessed with values from 'A' to 'H'
