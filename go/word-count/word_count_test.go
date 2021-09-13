@@ -22,7 +22,15 @@ func TestWordCount(t *testing.T) {
 	}
 }
 
-func BenchmarkWordCount(b *testing.B) {
+func BenchmarkWordCountReg(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		for _, tt := range testCases {
+			WordCountReg(tt.input)
+		}
+	}
+}
+
+func BenchmarkWordCountFieldsFunc(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		for _, tt := range testCases {
 			WordCount(tt.input)
