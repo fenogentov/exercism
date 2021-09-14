@@ -9,40 +9,41 @@ import (
 
 func RunLengthEncode(str string) string {
 	var cnt int
-	var enc string
-	for i := range str {
+	var enc strings.Builder
+	for i, s := range str {
 		cnt++
 		if len(str) == i+1 || str[i] != str[i+1] {
 			if cnt > 1 {
-				enc += strconv.Itoa(cnt) + string(str[i])
+				enc.WriteString(strconv.Itoa(cnt))
+				enc.WriteRune(s)
 			} else {
-				enc += string(str[i])
+				enc.WriteRune(s)
 			}
 			cnt = 0
 		}
 	}
-	return enc
+	return enc.String()
 }
 
 func RunLengthDecode(str string) string {
 	var cntStr string
-	var dec string
+	var dec strings.Builder
 	for i, s := range str {
 		if len(str) > i+1 && unicode.IsDigit(rune(s)) {
 			cntStr += string(s)
 			continue
 		}
 		if cntStr == "" {
-			dec += string(s)
+			dec.WriteRune(s)
 		} else {
 			cnt, err := strconv.Atoi(cntStr)
 			if err != nil {
 				log.Println(err)
 			}
-			dec += strings.Repeat(string(s), cnt)
+			dec.WriteString(strings.Repeat(string(s), cnt))
 		}
 		cntStr = ""
 	}
-	return dec
+	return dec.String()
 
 }
