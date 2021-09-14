@@ -7,6 +7,7 @@ import (
 )
 
 // Detect check anagrams
+// v1. range map
 func DetectV1(subject string, candidates []string) []string {
 	var ret []string
 	inp := make(map[rune]int, len(subject))
@@ -41,6 +42,8 @@ func DetectV1(subject string, candidates []string) []string {
 	}
 	return ret
 }
+
+// v2. sorting letters. comparison of words
 func Detect(subject string, candidates []string) []string {
 	var ret []string
 
@@ -61,10 +64,10 @@ func Detect(subject string, candidates []string) []string {
 			ret = append(ret, candidate)
 		}
 	}
-
 	return ret
 }
 
+// v3. sorting letters. comparison of letters
 func DetectV3(subject string, candidates []string) []string {
 	var ret []string
 
@@ -86,6 +89,5 @@ func DetectV3(subject string, candidates []string) []string {
 		}
 		ret = append(ret, candidate)
 	}
-
 	return ret
 }
