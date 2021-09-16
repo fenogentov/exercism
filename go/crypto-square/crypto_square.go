@@ -1,12 +1,15 @@
 package cryptosquare
 
 import (
-	"fmt"
+	"math"
 	"strings"
 	"unicode"
 )
 
 func Encode(str string) string {
+	if len(str) == 0 {
+		return ""
+	}
 	str = strings.ToLower(str)
 	f := func(r rune) rune {
 		if unicode.IsDigit(r) || unicode.IsLetter(r) {
@@ -15,32 +18,31 @@ func Encode(str string) string {
 		return -1
 	}
 	str = strings.Map(f, str)
-
 	c, r := rectangle(len(str))
 	str += strings.Repeat(" ", (c*r - len(str)))
-	fmt.Println(str)
-	var res strings.Builder
-
+	var builder strings.Builder
 	for i := 0; i < c; i++ {
-		if i != 0 {
-			res.WriteString(" ")
+		for in, s := range str {
+			if in%c == i {
+				builder.WriteString(string(s))
+			}
 		}
-		for j := 0; j < len(str); j += r {
-			fmt.Println(i, j, i+j, len(str))
-			res.WriteByte(str[i+j])
+		if i != c-1 {
+			builder.WriteString(" ")
 		}
-		fmt.Println(res.String())
 	}
-	return res.String()
+	return builder.String()
 }
 
 func rectangle(l int) (c, r int) {
-	for r := 0; r < l; r++ {
-		for c := r; c <= (r + 1); c++ {
-			if c*r >= l {
-				return c, r
-			}
-		}
+	r = int(math.Sqrt(float64(l)))
+	c = r
+	if c*r == l {
+		return c, r
 	}
-	return 0, 0
+	c++
+	if c*r < l {
+		r++
+	}
+	return c, r
 }
