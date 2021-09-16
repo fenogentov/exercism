@@ -45,5 +45,4 @@ func RunLengthDecode(str string) string {
 		cntStr = ""
 	}
 	return dec.String()
-
 }

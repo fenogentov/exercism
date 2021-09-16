@@ -21,11 +21,11 @@ func Encode(str string) string {
 	fmt.Println(str)
 	var res strings.Builder
 
-	for i := 0; i <= r; i++ {
+	for i := 0; i < c; i++ {
 		if i != 0 {
 			res.WriteString(" ")
 		}
-		for j := 0; j < len(str); j += c {
+		for j := 0; j < len(str); j += r {
 			fmt.Println(i, j, i+j, len(str))
 			res.WriteByte(str[i+j])
 		}
