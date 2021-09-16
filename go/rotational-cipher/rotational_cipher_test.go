@@ -84,3 +84,22 @@ func BenchmarkRotationalCipher(b *testing.B) {
 		}
 	}
 }
+
+func TestRotationalCipherV1(t *testing.T) {
+	for _, testCase := range testCases {
+		cipher := RotationalCipherV1(testCase.inputPlain, testCase.inputShiftKey)
+		if cipher != testCase.expected {
+			t.Fatalf("FAIL: %s\n\tRotationalCipher(%s, %d)\nexpected: %s, \ngot:      %s",
+				testCase.description, testCase.inputPlain, testCase.inputShiftKey, testCase.expected, cipher)
+		}
+		t.Logf("PASS: %s", testCase.description)
+	}
+}
+
+func BenchmarkRotationalCipherV1(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		for _, testCase := range testCases {
+			RotationalCipherV1(testCase.inputPlain, testCase.inputShiftKey)
+		}
+	}
+}
