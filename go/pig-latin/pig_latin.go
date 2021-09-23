@@ -26,9 +26,6 @@ func encryption(str string) string {
 	if _, ok := vowelSound[str[0]]; !ok {
 		for {
 			if _, ok := vowelSound[str[0]]; !ok {
-				if str[1:2] == "qu" {
-					str = str[1:] + string(str[0])
-				}
 				if str[:2] == "qu" {
 					str = str[1:] + string(str[0])
 				}

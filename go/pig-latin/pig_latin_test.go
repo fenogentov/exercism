@@ -13,3 +13,14 @@ func TestPigLatin(t *testing.T) {
 		fmt.Printf("PASS: %s\n", test.description)
 	}
 }
+
+func BenchmarkAreaCode(b *testing.B) {
+	if testing.Short() {
+		b.Skip("skipping benchmark in short mode.")
+	}
+	for i := 0; i < b.N; i++ {
+		for _, test := range testCases {
+			Sentence(test.input)
+		}
+	}
+}
