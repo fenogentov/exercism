@@ -39,7 +39,7 @@ func (e *Node) Prev() *Node {
 
 // NewList makes a new list
 func NewList(args ...interface{}) *List {
-	l := new(List)
+	var l *List
 	for _, v := range args {
 		l.PushBack(v)
 	}
@@ -48,7 +48,7 @@ func NewList(args ...interface{}) *List {
 
 // PushFront adds an element to the beginning of the list.
 func (l *List) PushFront(v interface{}) {
-	newElem := Node{v, nil, l.head}
+	newElem := Node{Val: v, prev: nil, next: l.head}
 
 	if l.head != nil {
 		l.head.prev = &newElem
@@ -61,7 +61,7 @@ func (l *List) PushFront(v interface{}) {
 
 // PushBack adds an item to the end of the list.
 func (l *List) PushBack(v interface{}) {
-	newElem := Node{v, l.tail, nil}
+	newElem := Node{Val: v, prev: l.tail, next: nil}
 
 	if l.tail != nil {
 		l.tail.next = &newElem
