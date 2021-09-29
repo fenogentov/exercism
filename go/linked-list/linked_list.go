@@ -39,7 +39,7 @@ func (e *Node) Prev() *Node {
 
 // NewList makes a new list
 func NewList(args ...interface{}) *List {
-	var l *List
+	l := new(List)
 	for _, v := range args {
 		l.PushBack(v)
 	}
