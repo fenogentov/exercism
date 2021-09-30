@@ -6,17 +6,14 @@ func SearchInts(sl []int, key int) int {
 
 	for low <= high {
 		median := (low + high) / 2
-
-		if sl[median] < key {
+		if sl[median] == key {
+			return median
+		} else if sl[median] < key {
 			low = median + 1
 		} else {
 			high = median - 1
 		}
 	}
 
-	if low == len(sl) || sl[low] != key {
-		return -1
-	}
-
-	return low
+	return -1
 }
