@@ -1,117 +1,68 @@
 package cipher
 
 import (
+	"regexp"
+
 	"strings"
-	"unicode"
 )
 
 type Cipher interface {
 	Encode(string) string
+
 	Decode(string) string
 }
 
-func (c *Cipher) Encode(str string) string {
-	f := func(r rune) rune {
-		if !unicode.IsLetter(r) {
-			return -1
-		}
-		return r
-	}
-	strings.Map(f, str)
-	return ""
-}
+type VigenereCipher string
 
-func (c *Cipher) Decode(string) string {
+var simplify = regexp.MustCompile(`[^a-z]`)
 
-}
-
-func NewCaesar() Cipher {
+func NewCaesar() *VigenereCipher {
 	return NewShift(3)
 }
 
-func NewShift(distance int) Cipher {
-	if distance < -25 || distance > 25 || distance == 0 {
-		return nil
+func NewShift(shift int) *VigenereCipher {
+	if shift < 0 {
+		shift += 26
 	}
+	return NewVigenere(string(rune('a' + shift)))
 }
 
-func NewVigenere(key string) Cipher {
-
-	for _, r := range key {
-		if !unicode.IsLower(r) {
+func NewVigenere(key string) *VigenereCipher {
+	hasNonA := false
+	for _, k := range key {
+		if k < 'a' || k > 'z' {
 			return nil
 		}
+		if k != 'a' {
+			hasNonA = true
+		}
 	}
-	if strings.Count(key, "a") == len(key) {
+	if !hasNonA {
 		return nil
 	}
-
+	cipher := VigenereCipher(key)
+	return &cipher
 }
 
-// var rng = byte('z' - 'a' + 1)
-// // NewCaesar returns a Caesar cipher, based on Shift cipher
-// func NewCaesar() Cipher {
-// 	return NewShift(3)
-// }
-// // NewShift returns a Shift cipher, based on Vigenere cipher
+func (c VigenereCipher) Encode(plain string) (encoded string) {
+	simple := simplify.ReplaceAllString(strings.ToLower(plain), "")
+	for i, r := range simple {
+		newval := r + (rune(c[i%len(c)]) - 'a')
+		if newval > 'z' {
+			newval -= 26
+		}
+		encoded += string(newval)
+	}
+	return encoded
+}
 
-// func NewShift(k int) Cipher {
-// 	if k == 0 || k > 25 || k < -25 {
-// 		return nil
-// 	}
-// 	n := byte(k)
-// 	return NewVigenere(string('a' + (rng+n)%rng))
-// }
-
-// // Vigenere cipher
-// type Vigenere struct {
-// 	key string
-// }
-// // NewVigenere returns a new cipher
-// func NewVigenere(key string) Cipher {
-// 	min := byte('a')
-// 	max := byte('a')
-// 	for i := 0; i < len(key); i++ {
-// 		if key[i] < min {
-// 			min = key[i]
-// 		}
-// 		if key[i] > max {
-// 			max = key[i]
-// 		}
-// 	}
-// 	if min < 'a' || max > 'z' || max == 'a' {
-// 		return nil
-// 	}
-// 	return &Vigenere{key}
-// }
-// // Encode cleans a message and encodes it using the Vigenere cipher
-// func (cipher *Vigenere) Encode(msg string) string {
-// 	var input bytes.Buffer
-// 	for _, c := range msg {
-// 		if c >= 'A' && c <= 'Z' {
-// 			input.WriteByte(byte(c) - 'A' + 'a')
-// 		} else if c >= 'a' && c <= 'z' {
-// 			input.WriteByte(byte(c))
-// 		}
-// 	}
-// 	clean := input.String()
-// 	var buffer bytes.Buffer
-// 	for i := 0; i < len(clean); i++ {
-// 		c := clean[i]
-// 		k := cipher.key[i%len(cipher.key)]
-// 		s := 'a' + ((c-'a')+(k-'a'))%rng
-// 		buffer.WriteByte(s)
-// 	}
-// 	return buffer.String()
-// }
-// // Decode decodes msg
-// func (cipher *Vigenere) Decode(msg string) string {
-// 	var buffer bytes.Buffer
-// 	for i := 0; i < len(msg); i++ {
-// 		c := msg[i]
-// 		k := cipher.key[i%len(cipher.key)]
-// 		s := 'a' + ((c-'a')-(k-'a')+rng)%rng
-// 		buffer.WriteByte(s)
-// 	}
-// 	return buffer.String()
-// }
+func (c VigenereCipher) Decode(encoded string) (plain string) {
+	for i, r := range encoded {
+		newval := r - (rune(c[i%len(c)]) - 'a')
+		if newval < 'a' {
+			newval += 26
+		}
+		plain += string(newval)
+	}
+	return plain
+}
