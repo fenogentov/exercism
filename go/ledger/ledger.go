@@ -144,6 +144,7 @@ func money(locale, currency string, cents int) string {
 		parts = append(parts, rest[len(rest)-3:])
 		rest = rest[:len(rest)-3]
 	}
+
 	if len(rest) > 0 {
 		parts = append(parts, rest)
 	}
@@ -166,9 +167,9 @@ func money(locale, currency string, cents int) string {
 
 func oldFormatLedger(currency string, locale string, entries []Entry) (string, error) {
 	var entriesCopy []Entry
-
-	entriesCopy = append(entriesCopy, entries...)
-
+	for _, e := range entries {
+		entriesCopy = append(entriesCopy, e)
+	}
 	if len(entries) == 0 {
 		if _, err := FormatLedger(currency, "en-US", []Entry{{Date: "2014-01-01", Description: "", Change: 0}}); err != nil {
 			return "", err
