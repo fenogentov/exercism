@@ -14,9 +14,9 @@ type Entry struct {
 }
 
 type Msg struct {
-	i int
-	s string
-	e error
+	i   int
+	str string
+	err error
 }
 
 var locales = map[string]struct {
@@ -90,12 +90,12 @@ func FormatLedger(currency string, locale string, entries []Entry) (string, erro
 	for i, et := range entriesCopy {
 		go func(i int, entry Entry) {
 			if len(entry.Date) != 10 {
-				co <- Msg{e: errors.New("")}
+				co <- Msg{err: errors.New("")}
 			}
 
 			d1, d2, d3, d4, d5 := entry.Date[0:4], entry.Date[4], entry.Date[5:7], entry.Date[7], entry.Date[8:10]
 			if d2 != '-' || d4 != '-' {
-				co <- Msg{e: errors.New("")}
+				co <- Msg{err: errors.New("")}
 			}
 			de := entry.Description
 			if len(de) > 25 {
@@ -110,17 +110,17 @@ func FormatLedger(currency string, locale string, entries []Entry) (string, erro
 
 			cents := entry.Change
 
-			co <- Msg{i: i, s: formatRow(d, de, money(locale, currency, cents))}
+			co <- Msg{i: i, str: formatRow(d, de, money(locale, currency, cents))}
 
 		}(i, et)
 	}
 	ss := make([]string, len(entriesCopy))
 	for range entriesCopy {
 		v := <-co
-		if v.e != nil {
-			return "", v.e
+		if v.err != nil {
+			return "", v.err
 		}
-		ss[v.i] = v.s
+		ss[v.i] = v.str
 	}
 	return locales[locale].header + strings.Join(ss, ""), nil
 }
@@ -134,9 +134,7 @@ func money(locale, currency string, cents int) string {
 		cents = -cents
 		negative = true
 	}
-	var a string
 
-	a += locales[locale].currency[currency]
 	centsStr := fmt.Sprintf("%03d", cents)
 
 	rest := centsStr[:len(centsStr)-2]
@@ -150,15 +148,15 @@ func money(locale, currency string, cents int) string {
 		parts = append(parts, rest)
 	}
 
+	var a string
+	a += locales[locale].currency[currency]
 	for i := len(parts) - 1; i >= 0; i-- {
 		a += parts[i] + locales[locale].thousandSep
 	}
 	a = a[:len(a)-1] + locales[locale].decimalPoint + centsStr[len(centsStr)-2:]
 
 	if negative {
-
 		a = locales[locale].negative(a)
-
 	} else {
 		a += " "
 	}
@@ -168,9 +166,9 @@ func money(locale, currency string, cents int) string {
 
 func oldFormatLedger(currency string, locale string, entries []Entry) (string, error) {
 	var entriesCopy []Entry
-	for _, e := range entries {
-		entriesCopy = append(entriesCopy, e)
-	}
+
+	entriesCopy = append(entriesCopy, entries...)
+
 	if len(entries) == 0 {
 		if _, err := FormatLedger(currency, "en-US", []Entry{{Date: "2014-01-01", Description: "", Change: 0}}); err != nil {
 			return "", err
